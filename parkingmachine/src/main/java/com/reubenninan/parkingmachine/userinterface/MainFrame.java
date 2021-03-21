@@ -6,8 +6,8 @@ import java.awt.*;
 public class MainFrame extends JFrame {
 
 	private JFrame frame;
-	private int width = 600;
-	private int height = 350;
+	private int width = 720;
+	private int height = 480;
 
 	static protected JPanel main;
 	static protected CardLayout cardLayout;
@@ -22,13 +22,19 @@ public class MainFrame extends JFrame {
 		JPanel home = new HomePanel().getContentPane();
 		JPanel register = new RegisterPanel().getContentPane();
 		JPanel login = new LoginPanel().getContentPane();
-	
+		JPanel manageOfficer = new ManageOfficerPanel().getContentPane();
+		JPanel addOfficer = new AddOfficerPanel().getContentPane();
+		JPanel removeOfficer = new RemoveOfficerPanel().getContentPane();
+
 		cardLayout = new CardLayout();
 		main.setLayout(cardLayout);
 
 		main.add(home, "home");
 		main.add(register, "register");
 		main.add(login, "login");
+		main.add(manageOfficer, "manageOfficer");
+		main.add(addOfficer, "addOfficer");
+		main.add(removeOfficer, "removeOfficer");
 
 		frame.add(main, BorderLayout.CENTER);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

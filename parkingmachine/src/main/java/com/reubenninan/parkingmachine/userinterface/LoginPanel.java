@@ -1,7 +1,6 @@
 package com.reubenninan.parkingmachine.userinterface;
 
 import java.awt.BorderLayout;
-import java.awt.FlowLayout;
 import java.awt.GridLayout;
 
 import javax.swing.*;

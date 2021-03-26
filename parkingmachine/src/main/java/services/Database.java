@@ -8,6 +8,9 @@ import users.*;
 // Singleton Class -> Single Access Point
 public class Database {
 
+	private final int USER_COLUMN_LENGTH = 5;
+	private final int BOOKING_COLUMN_LENGTH = 4;
+
 	private ArrayList<String[]> UserData;
 	private ArrayList<String[]> BookingData;
 
@@ -15,6 +18,17 @@ public class Database {
 
 	public static Database getInstance() {
 		return db;
+	}
+
+	private void updateData(ArrayList<String[]> data, String filename, int columns) {
+
+		for (String[] s : data) {
+			if (s.length > 0) {
+				String line = Arrays.toString(s).substring(1, Arrays.toString(s).length() - 1);
+				System.out.println(line);
+			}
+		}
+		System.out.println("----------------");
 	}
 
 	private ArrayList<String[]> readData(String filename) throws IOException {
@@ -57,7 +71,7 @@ public class Database {
 		return type;
 	}
 
-	public Customer getCustomer(String email, String password) {
+	public Customer getUser(String email, String password) {
 		Customer customer = null;
 		for (String[] row : UserData) {
 			String rowEmail = row[0];
@@ -71,10 +85,11 @@ public class Database {
 		return customer;
 	}
 
-	public void addCustomer(Customer customer) {
+	public void addUser(Customer customer) {
 		String[] newCustomer = customer.toStringArray();
 		UserData.add(newCustomer);
-		// TODO: add method to update csv file
+
+		updateData(UserData, "users.data", USER_COLUMN_LENGTH);
 	}
 
 	public ArrayList<String[]> getBookingData() {

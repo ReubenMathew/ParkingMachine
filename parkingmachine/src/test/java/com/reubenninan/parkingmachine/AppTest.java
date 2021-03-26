@@ -15,15 +15,15 @@ public class AppTest {
 
 	@Before
 	public void setup() throws Exception {
-		db.addCustomer(new Customer("test@gmail.com", "1234", "First", "Last"));
+		db.addUser(new Customer("test@gmail.com", "1234", "First", "Last"));
 	}
 
 	@Test
 	public void test_add_Customer() {
 		Customer newCustomer = new Customer("bobby@gmail.com", "1234", "Bobby", "Boy");
-		db.addCustomer(newCustomer);
+		db.addUser(newCustomer);
 
-		Assert.assertTrue(db.getCustomer("bobby@gmail.com", "1234").equals(newCustomer));
+		Assert.assertTrue(db.getUser("bobby@gmail.com", "1234").equals(newCustomer));
 	}
 
 	@Test

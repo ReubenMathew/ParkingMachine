@@ -1,6 +1,7 @@
 package services;
 
 import java.io.*;
+import com.csvreader.*;
 import java.util.*;
 
 import users.*;
@@ -13,7 +14,6 @@ public class Database {
 
 	private ArrayList<String[]> UserData;
 	private ArrayList<String[]> BookingData;
-
 	private static final Database db = new Database();
 
 	public static Database getInstance() {

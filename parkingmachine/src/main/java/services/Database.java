@@ -70,22 +70,22 @@ public class Database {
 //				System.out.println(user.toString());
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			
 		}
 //		printUsers();
 	}
 
-	public void printOfficers() {
-		for (Officer officer : officers) {
-			System.out.println(officer.toString());
-		}
-	}
-
-	public void printUsers() {
-		for (User user : users) {
-			System.out.println(user.toString());
-		}
-	}
+//	public void printOfficers() {
+//		for (Officer officer : officers) {
+//			System.out.println(officer.toString());
+//		}
+//	}
+//
+//	public void printUsers() {
+//		for (User user : users) {
+//			System.out.println(user.toString());
+//		}
+//	}
 
 	public void updateOfficers() {
 		try {

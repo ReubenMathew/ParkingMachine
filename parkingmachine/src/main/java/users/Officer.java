@@ -1,10 +1,6 @@
 package users;
 
-public class Officer extends User {
+public class Officer {
 
-	public Officer(String email, String password) {
-		setEmail(email);
-		setPassword(password);
-	}
-
+	
 }

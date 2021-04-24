@@ -44,9 +44,9 @@ public class User {
 		this.lastName = lastName;
 	}
 	
-//	public String toString() {
-//		return this.email + " " + this.password + " " + this.firstName + " " + this.lastName;
-//	}
+	public String toString() {
+		return this.email + " " + this.password + " " + this.firstName + " " + this.lastName;
+	}
 
 //	public boolean equals(User o) {
 //		if (this == o)

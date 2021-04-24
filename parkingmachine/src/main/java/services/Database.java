@@ -14,6 +14,16 @@ public class Database {
 	private static final Database db = new Database();
 
 	private ArrayList<User> users = new ArrayList<User>();
+	
+	public boolean validateUser(String email, String password) {
+		for (int i = 0; i < users.size(); i++) {
+			User user = users.get(i);
+			if(user.getEmail().equals(email) && user.getPassword().equals(password)) {
+				return true;
+			}
+		}
+		return false;
+	}
 
 	public void loadUsers() {
 		users.clear();
@@ -36,11 +46,11 @@ public class Database {
 //		printUsers();
 	}
 
-//	public void printUsers() {
-//		for (User user : users) {
-//			System.out.println(user.toString());
-//		}
-//	}
+	public void printUsers() {
+		for (User user : users) {
+			System.out.println(user.toString());
+		}
+	}
 
 	public void updateUsers() {
 		try {
@@ -84,6 +94,7 @@ public class Database {
 				users.remove(i);
 			}
 		}
+		
 		updateUsers();
 	}
 

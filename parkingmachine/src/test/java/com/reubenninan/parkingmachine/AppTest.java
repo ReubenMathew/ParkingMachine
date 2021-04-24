@@ -15,6 +15,7 @@ public class AppTest {
 	@Before
 	public void setup() throws Exception {
 		db.getUsers().clear();
+		db.updateUsers();
 	}
 
 	@Test
@@ -31,6 +32,7 @@ public class AppTest {
 		db.addUser("test1", "pass1", "first1", "last1");
 		db.addUser("test2", "pass2", "first2", "last2");
 		db.removeUser("test2");
+		db.printUsers();
 		db.loadUsers();
 		assertEquals(1, db.getUsers().size());
 	}
@@ -38,6 +40,8 @@ public class AppTest {
 	@Test
 	public void test_user_validation() {
 		db.loadUsers();
+		db.addUser("test1", "pass1", "first1", "last1");
+		db.addUser("test2", "pass2", "first2", "last2");
 		assertTrue(db.validateUser("test1", "pass1"));
 		assertFalse(db.validateUser("test2", "wrongpassword"));
 	}

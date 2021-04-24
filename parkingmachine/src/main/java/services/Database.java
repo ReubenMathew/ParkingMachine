@@ -145,6 +145,7 @@ public class Database {
 	}
 
 	public void addUser(String email, String password, String firstname, String lastname) {
+		removeUser(email);
 		User user = new User();
 		user.setEmail(email);
 		user.setPassword(password);
@@ -185,11 +186,13 @@ public class Database {
 	}
 
 	public static Database getInstance() {
+		db.loadOfficers();
+		db.loadUsers();
 		return db;
 	}
 
 	private Database() {
-
+		
 	}
 
 }

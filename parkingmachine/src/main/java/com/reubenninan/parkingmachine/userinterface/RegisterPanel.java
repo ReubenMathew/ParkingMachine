@@ -2,6 +2,7 @@ package com.reubenninan.parkingmachine.userinterface;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
+import services.*;
 
 import javax.swing.*;
 
@@ -23,16 +24,6 @@ public class RegisterPanel extends JPanel {
 		JPanel registerDetails = new JPanel();
 		registerDetails.setLayout(new GridLayout(0, 2, 2, 2));
 
-		JLabel firstLabel = new JLabel("First Name:");
-		JTextField firstField = new JTextField(18);
-		registerDetails.add(firstLabel);
-		registerDetails.add(firstField);
-
-		JLabel secondLabel = new JLabel("Last Name:");
-		JTextField secondField = new JTextField(18);
-		registerDetails.add(secondLabel);
-		registerDetails.add(secondField);
-
 		JLabel emailLabel = new JLabel("Email:");
 		JTextField emailField = new JTextField(18);
 		registerDetails.add(emailLabel);
@@ -43,14 +34,28 @@ public class RegisterPanel extends JPanel {
 		registerDetails.add(passwordLabel);
 		registerDetails.add(passwordField);
 
+		JLabel firstLabel = new JLabel("First Name:");
+		JTextField firstField = new JTextField(18);
+		registerDetails.add(firstLabel);
+		registerDetails.add(firstField);
+
+		JLabel lastLabel = new JLabel("Last Name:");
+		JTextField lastField = new JTextField(18);
+		registerDetails.add(lastLabel);
+		registerDetails.add(lastField);
+		
+		Database db = Database.getInstance();
+
 		JButton registerButton = new JButton("Register");
 		registerButton.addActionListener(e -> {
-			firstName = emailField.getText();
-			lastName = passwordField.getText();
-			System.out.println("First: " + firstName + "\nLast: " + lastName);
 			email = emailField.getText();
 			password = passwordField.getText();
-			System.out.println("Email: " + email + "\nPassword: " + password);
+			firstName = firstField.getText();
+			lastName = lastField.getText();
+//			System.out.println("First: " + firstName + "\nLast: " + lastName);
+//			System.out.println("Email: " + email + "\nPassword: " + password);
+			db.addUser(email, password, firstName, lastName);
+			MainFrame.cardLayout.show(MainFrame.main, "home");
 		});
 		registerDetails.add(registerButton);
 

@@ -5,6 +5,8 @@ import java.awt.GridLayout;
 
 import javax.swing.*;
 
+import services.Database;
+
 public class LoginPanel extends JPanel {
 
 	private JPanel contentPane;
@@ -30,12 +32,17 @@ public class LoginPanel extends JPanel {
 		JTextField passwordField = new JTextField(18);
 		loginDetails.add(passwordLabel);
 		loginDetails.add(passwordField);
+		
+		Database db = Database.getInstance();
 
 		JButton loginButton = new JButton("Login");
 		loginButton.addActionListener(e -> {
 			email = emailField.getText();
 			password = passwordField.getText();
-			System.out.println("Email: " + email + "\nPassword: " + password);
+//			System.out.println("Email: " + email + "\nPassword: " + password);
+			if (db.validateUser(email, password)) {
+				MainFrame.cardLayout.show(MainFrame.main, "userDashboard");
+			}
 		});
 		loginDetails.add(loginButton);
 

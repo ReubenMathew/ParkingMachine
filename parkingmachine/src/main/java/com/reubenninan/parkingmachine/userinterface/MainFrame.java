@@ -25,6 +25,7 @@ public class MainFrame extends JFrame {
 		JPanel manageOfficer = new ManageOfficerPanel().getContentPane();
 		JPanel addOfficer = new AddOfficerPanel().getContentPane();
 		JPanel removeOfficer = new RemoveOfficerPanel().getContentPane();
+		JPanel userDashboard = new UserDashboardPanel().getContentPane();
 
 		cardLayout = new CardLayout();
 		main.setLayout(cardLayout);
@@ -35,6 +36,7 @@ public class MainFrame extends JFrame {
 		main.add(manageOfficer, "manageOfficer");
 		main.add(addOfficer, "addOfficer");
 		main.add(removeOfficer, "removeOfficer");
+		main.add(userDashboard, "userDashboard");
 
 		frame.add(main, BorderLayout.CENTER);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

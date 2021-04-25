@@ -1,12 +1,12 @@
 package services;
 
 import java.io.*;
-import java.nio.charset.Charset;
 
 import com.csvreader.*;
-import java.util.*;
 
-import users.*;
+import util.*;
+
+import java.util.*;
 
 // Singleton Class -> Single Access Point
 public class Database {
@@ -15,6 +15,7 @@ public class Database {
 
 	private ArrayList<User> users = new ArrayList<User>();
 	private ArrayList<Officer> officers = new ArrayList<Officer>();
+	private ArrayList<Booking> bookings = new ArrayList<Booking>();
 
 	public boolean validateOfficer(String email, String password) {
 		for (int i = 0; i < officers.size(); i++) {
@@ -34,6 +35,26 @@ public class Database {
 			}
 		}
 		return false;
+	}
+
+	public void loadBookings() {
+		bookings.clear();
+		try {
+			CsvReader reader = new CsvReader("bookings.csv");
+			reader.readHeaders();
+
+			while (reader.readRecord()) {
+				Booking booking = new Booking();
+				booking.setBookingNumber(Integer.parseInt(reader.get("bookingNumber")));
+				booking.setBookingTime(Integer.parseInt(reader.get("bookingTime")));
+				booking.setLicensePlate(reader.get("licensePlate"));
+				booking.setParkingSpace(Integer.parseInt(reader.get("parkingSpace")));
+				booking.setUserEmail(reader.get("userEmail"));
+				bookings.add(booking);
+			}
+		} catch (Exception e) {
+
+		}
 	}
 
 	public void loadOfficers() {
@@ -67,12 +88,10 @@ public class Database {
 				user.setFirstName(reader.get("firstname"));
 				user.setLastName(reader.get("lastname"));
 				users.add(user);
-//				System.out.println(user.toString());
 			}
 		} catch (Exception e) {
-			
+
 		}
-//		printUsers();
 	}
 
 //	public void printOfficers() {
@@ -86,6 +105,37 @@ public class Database {
 //			System.out.println(user.toString());
 //		}
 //	}
+	public void printBookings() {
+		for (Booking booking : bookings) {
+			System.out.println(booking.toString());
+		}
+	}
+
+	public void updateBookings() {
+		try {
+			CsvWriter writer = new CsvWriter(new FileWriter("bookings.csv", false), ',');
+
+			writer.write("bookingNumber");
+			writer.write("bookingTime");
+			writer.write("licensePlate");
+			writer.write("parkingSpace");
+			writer.write("userEmail");
+			writer.endRecord();
+
+			for (Booking booking : bookings) {
+				writer.write(Integer.toString(booking.getBookingNumber()));
+				writer.write(Integer.toString(booking.getBookingTime()));
+				writer.write(booking.getLicensePlate());
+				writer.write(Integer.toString(booking.getParkingSpace()));
+				writer.write(booking.getUserEmail());
+				writer.endRecord();
+			}
+			writer.close();
+
+		} catch (Exception e) {
+
+		}
+	}
 
 	public void updateOfficers() {
 		try {
@@ -132,6 +182,47 @@ public class Database {
 
 		}
 	}
+	
+	public ArrayList<Booking> userBookings(String email){
+		ArrayList<Booking> res = new ArrayList<Booking>();
+		for (Booking b : bookings) {
+			if (b.getUserEmail().equals(email)) {
+				res.add(b);
+			}
+		}
+		return res;
+	}
+
+	public boolean bookingLimitReached(String email) {
+		int bookingCount = 0;
+		for (Booking b : bookings) {
+			if (b.getUserEmail().equals(email)) {
+				bookingCount++;
+			}
+		}
+		return bookingCount == 3 ? true : false;
+	}
+
+	public void addBooking(int bookingTime, String licensePlate, int parkingSpace, String userEmail) {
+		if (bookingLimitReached(userEmail)) {
+			return;
+		}
+		Booking booking = new Booking();
+		booking.createAndSetBookingNumber();
+		booking.setBookingTime(bookingTime);
+		booking.setLicensePlate(licensePlate);
+		booking.setParkingSpace(parkingSpace);
+		booking.setUserEmail(userEmail);
+
+		for (Booking b : bookings) {
+			// if parking space is booked then do not add
+			if (b.getParkingSpace() == parkingSpace)
+				return;
+		}
+
+		bookings.add(booking);
+		updateBookings();
+	}
 
 	public void addNewOfficer(String email, String password) {
 		this.removeOfficer(email);
@@ -157,13 +248,21 @@ public class Database {
 		updateUsers();
 	}
 
+	public void removeBooking(int bookingNumber) {
+		for (int i = 0; i < bookings.size(); i++) {
+			if (bookings.get(i).getBookingNumber() == bookingNumber) {
+				bookings.remove(i);
+			}
+		}
+		updateBookings();
+	}
+
 	public void removeOfficer(String email) {
 		for (int i = 0; i < officers.size(); i++) {
 			if (officers.get(i).getEmail().equals(email)) {
 				officers.remove(i);
 			}
 		}
-
 		updateOfficers();
 	}
 
@@ -173,8 +272,11 @@ public class Database {
 				users.remove(i);
 			}
 		}
-
 		updateUsers();
+	}
+
+	public ArrayList<Booking> getBookings() {
+		return this.bookings;
 	}
 
 	public ArrayList<Officer> getOfficers() {
@@ -185,6 +287,15 @@ public class Database {
 		return this.users;
 	}
 
+	public User getUser(String email) {
+		for (int i = 0; i < users.size(); i++) {
+			if (users.get(i).getEmail().equals(email)) {
+				return users.get(i);
+			}
+		}
+		return null;
+	}
+
 	public static Database getInstance() {
 		db.loadOfficers();
 		db.loadUsers();
@@ -192,7 +303,7 @@ public class Database {
 	}
 
 	private Database() {
-		
+
 	}
 
 }

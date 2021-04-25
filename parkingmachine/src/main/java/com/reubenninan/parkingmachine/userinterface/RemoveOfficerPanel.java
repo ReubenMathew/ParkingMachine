@@ -3,6 +3,8 @@ package com.reubenninan.parkingmachine.userinterface;
 import java.awt.*;
 import javax.swing.*;
 
+import services.Database;
+
 public class RemoveOfficerPanel extends JPanel {
 
 	private JPanel contentPane;
@@ -23,13 +25,20 @@ public class RemoveOfficerPanel extends JPanel {
 		addOfficerDetails.add(emailLabel);
 		addOfficerDetails.add(emailField);
 
-		JButton addOfficerButton = new JButton("Remove Officer");
+		Database db = Database.getInstance();
+		
+		JButton removeOfficerButton = new JButton("Remove Officer");
+		removeOfficerButton.addActionListener(e -> {
+			String email = emailField.getText();
+			db.removeOfficer(email);
+			MainFrame.cardLayout.show(MainFrame.main, "adminDashboard");
+		});
 
 		JButton backButton = new JButton("Go Back");
 		backButton.addActionListener(e -> MainFrame.cardLayout.show(MainFrame.main, "manageOfficer"));
 
 		JPanel homeBtnPanel = new JPanel();
-		homeBtnPanel.add(addOfficerButton);
+		homeBtnPanel.add(removeOfficerButton);
 		homeBtnPanel.add(backButton);
 
 		contentPane.add(addOfficerDetails);

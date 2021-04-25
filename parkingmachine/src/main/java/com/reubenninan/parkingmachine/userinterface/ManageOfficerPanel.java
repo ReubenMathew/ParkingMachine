@@ -24,7 +24,11 @@ public class ManageOfficerPanel extends JPanel {
 		JPanel homeBtnPanel = new JPanel();
 		homeBtnPanel.add(addOfficerButton);
 		homeBtnPanel.add(removeOfficerButton);
-
+		
+		JButton homeButton = new JButton("Go Back");
+		homeButton.addActionListener(e -> MainFrame.cardLayout.show(MainFrame.main, "adminDashboard"));
+		homeBtnPanel.add(homeButton);
+		
 		contentPane.add(homeBtnPanel, BorderLayout.SOUTH);
 
 	}

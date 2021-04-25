@@ -25,13 +25,9 @@ public class HomePanel extends JPanel {
 		JButton registerButton = new JButton("Register");
 		registerButton.addActionListener(e -> MainFrame.cardLayout.show(MainFrame.main, "register"));
 
-		JButton manageOfficerButton = new JButton("Manage Officer");
-		manageOfficerButton.addActionListener(e -> MainFrame.cardLayout.show(MainFrame.main, "manageOfficer"));
-
 		JPanel homeBtnPanel = new JPanel();
 		homeBtnPanel.add(loginButton);
 		homeBtnPanel.add(registerButton);
-		homeBtnPanel.add(manageOfficerButton);
 
 		contentPane.add(homeBtnPanel, BorderLayout.SOUTH);
 

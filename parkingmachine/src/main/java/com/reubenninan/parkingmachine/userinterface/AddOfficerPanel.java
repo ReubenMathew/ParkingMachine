@@ -3,6 +3,8 @@ package com.reubenninan.parkingmachine.userinterface;
 import java.awt.*;
 import javax.swing.*;
 
+import services.Database;
+
 public class AddOfficerPanel extends JPanel {
 
 	private JPanel contentPane;
@@ -18,16 +20,6 @@ public class AddOfficerPanel extends JPanel {
 		JPanel addOfficerDetails = new JPanel();
 		addOfficerDetails.setLayout(new GridLayout(0, 2, 2, 2));
 
-		JLabel firstLabel = new JLabel("First Name:");
-		JTextField firstField = new JTextField(18);
-		addOfficerDetails.add(firstLabel);
-		addOfficerDetails.add(firstField);
-
-		JLabel secondLabel = new JLabel("Last Name:");
-		JTextField secondField = new JTextField(18);
-		addOfficerDetails.add(secondLabel);
-		addOfficerDetails.add(secondField);
-
 		JLabel emailLabel = new JLabel("Email:");
 		JTextField emailField = new JTextField(18);
 		addOfficerDetails.add(emailLabel);
@@ -39,6 +31,15 @@ public class AddOfficerPanel extends JPanel {
 		addOfficerDetails.add(passwordField);
 
 		JButton addOfficerButton = new JButton("Add Officer");
+		
+		Database db = Database.getInstance();
+	
+		addOfficerButton.addActionListener(e -> {
+			String email = emailField.getText();
+			String password = passwordField.getText();
+			db.addNewOfficer(email, password);
+			MainFrame.cardLayout.show(MainFrame.main, "adminDashboard");
+		});
 
 		JButton backButton = new JButton("Go Back");
 		backButton.addActionListener(e -> MainFrame.cardLayout.show(MainFrame.main, "manageOfficer"));

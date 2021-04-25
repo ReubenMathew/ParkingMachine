@@ -6,12 +6,18 @@ import java.awt.GridLayout;
 import javax.swing.*;
 
 import services.Database;
+import util.User;
 
 public class LoginPanel extends JPanel {
 
 	private JPanel contentPane;
 	private String email;
 	private String password;
+	
+	private final String ADMIN_EMAIL = "admin@admin.com";
+	private final String ADMIN_PASSWORD = "123abc";
+	
+	public static User user;
 
 	public LoginPanel() {
 
@@ -39,8 +45,14 @@ public class LoginPanel extends JPanel {
 		loginButton.addActionListener(e -> {
 			email = emailField.getText();
 			password = passwordField.getText();
-//			System.out.println("Email: " + email + "\nPassword: " + password);
+
+			if (email.equals(ADMIN_EMAIL) && (password.equals(ADMIN_PASSWORD))) {
+				MainFrame.cardLayout.show(MainFrame.main, "adminDashboard");
+			}
+			
+			// if user then validate
 			if (db.validateUser(email, password)) {
+				user = db.getUser(email);
 				MainFrame.cardLayout.show(MainFrame.main, "userDashboard");
 			}
 		});

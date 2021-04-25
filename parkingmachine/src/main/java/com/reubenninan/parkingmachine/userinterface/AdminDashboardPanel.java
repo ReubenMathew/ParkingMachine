@@ -3,12 +3,10 @@ package com.reubenninan.parkingmachine.userinterface;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import services.*;
-import util.User;
 
-import javax.annotation.processing.Generated;
 import javax.swing.*;
 
-public class UserDashboardPanel extends JPanel {
+public class AdminDashboardPanel extends JPanel {
 
 	private JPanel contentPane;
 	String firstName;
@@ -16,7 +14,7 @@ public class UserDashboardPanel extends JPanel {
 	String email;
 	String password;
 
-	public UserDashboardPanel() {
+	public AdminDashboardPanel() {
 
 		contentPane = new JPanel();
 		contentPane.setLayout(new GridLayout(3, 0));
@@ -26,19 +24,16 @@ public class UserDashboardPanel extends JPanel {
 		JPanel registerDetails = new JPanel();
 		registerDetails.setLayout(new GridLayout(0, 2, 2, 2));
 
-		JButton bookSpaceButton = new JButton("Book Space");
-		bookSpaceButton.addActionListener(e -> MainFrame.cardLayout.show(MainFrame.main, ""));
-
-		JButton cancelSpaceButton = new JButton("Cancel Booking");
-		cancelSpaceButton.addActionListener(e -> MainFrame.cardLayout.show(MainFrame.main, ""));
-
-		JPanel homeBtnPanel = new JPanel();
-		homeBtnPanel.add(bookSpaceButton);
-		homeBtnPanel.add(cancelSpaceButton);
 
 		JButton homeButton = new JButton("Go Back Home");
 		homeButton.addActionListener(e -> MainFrame.cardLayout.show(MainFrame.main, "home"));
+
+		JPanel homeBtnPanel = new JPanel();
 		homeBtnPanel.add(homeButton);
+		
+		JButton manageOfficerButton = new JButton("Manage Officer");
+		manageOfficerButton.addActionListener(e -> MainFrame.cardLayout.show(MainFrame.main, "manageOfficer"));
+		homeBtnPanel.add(manageOfficerButton);
 
 		contentPane.add(label);
 		contentPane.add(registerDetails);

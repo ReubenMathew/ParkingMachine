@@ -1,7 +1,6 @@
 package services;
 
 import java.io.*;
-import java.nio.charset.Charset;
 
 import com.csvreader.*;
 
@@ -183,15 +182,38 @@ public class Database {
 
 		}
 	}
+	
+	public ArrayList<Booking> userBookings(String email){
+		ArrayList<Booking> res = new ArrayList<Booking>();
+		for (Booking b : bookings) {
+			if (b.getUserEmail().equals(email)) {
+				res.add(b);
+			}
+		}
+		return res;
+	}
+
+	public boolean bookingLimitReached(String email) {
+		int bookingCount = 0;
+		for (Booking b : bookings) {
+			if (b.getUserEmail().equals(email)) {
+				bookingCount++;
+			}
+		}
+		return bookingCount == 3 ? true : false;
+	}
 
 	public void addBooking(int bookingTime, String licensePlate, int parkingSpace, String userEmail) {
+		if (bookingLimitReached(userEmail)) {
+			return;
+		}
 		Booking booking = new Booking();
 		booking.createAndSetBookingNumber();
 		booking.setBookingTime(bookingTime);
 		booking.setLicensePlate(licensePlate);
 		booking.setParkingSpace(parkingSpace);
 		booking.setUserEmail(userEmail);
-		
+
 		for (Booking b : bookings) {
 			// if parking space is booked then do not add
 			if (b.getParkingSpace() == parkingSpace)
@@ -264,7 +286,7 @@ public class Database {
 	public ArrayList<User> getUsers() {
 		return this.users;
 	}
-	
+
 	public User getUser(String email) {
 		for (int i = 0; i < users.size(); i++) {
 			if (users.get(i).getEmail().equals(email)) {

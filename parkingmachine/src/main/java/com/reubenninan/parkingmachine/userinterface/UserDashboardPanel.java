@@ -27,10 +27,10 @@ public class UserDashboardPanel extends JPanel {
 		registerDetails.setLayout(new GridLayout(0, 2, 2, 2));
 
 		JButton bookSpaceButton = new JButton("Book Space");
-		bookSpaceButton.addActionListener(e -> MainFrame.cardLayout.show(MainFrame.main, ""));
+		bookSpaceButton.addActionListener(e -> MainFrame.cardLayout.show(MainFrame.main, "addBooking"));
 
 		JButton cancelSpaceButton = new JButton("Cancel Booking");
-		cancelSpaceButton.addActionListener(e -> MainFrame.cardLayout.show(MainFrame.main, ""));
+		cancelSpaceButton.addActionListener(e -> MainFrame.cardLayout.show(MainFrame.main, "cancelBooking"));
 
 		JPanel homeBtnPanel = new JPanel();
 		homeBtnPanel.add(bookSpaceButton);

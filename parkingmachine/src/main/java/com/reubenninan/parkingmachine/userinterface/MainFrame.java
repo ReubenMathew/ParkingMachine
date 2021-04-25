@@ -28,6 +28,8 @@ public class MainFrame extends JFrame {
 		JPanel userDashboard = new UserDashboardPanel().getContentPane();
 		JPanel adminDashboard = new AdminDashboardPanel().getContentPane();
 		JPanel officerDashboard = new OfficerDashboardPanel().getContentPane();
+		JPanel addBooking = new AddBookingPanel().getContentPane();
+		JPanel cancelBooking = new CancelBookingPanel().getContentPane();
 
 		cardLayout = new CardLayout();
 		main.setLayout(cardLayout);
@@ -41,6 +43,8 @@ public class MainFrame extends JFrame {
 		main.add(userDashboard, "userDashboard");
 		main.add(adminDashboard, "adminDashboard");
 		main.add(officerDashboard, "officerDashboard");
+		main.add(addBooking, "addBooking");
+		main.add(cancelBooking, "cancelBooking");
 
 		frame.add(main, BorderLayout.CENTER);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

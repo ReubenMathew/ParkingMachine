@@ -13,10 +13,10 @@ public class LoginPanel extends JPanel {
 	private JPanel contentPane;
 	private String email;
 	private String password;
-	
+
 	private final String ADMIN_EMAIL = "admin@admin.com";
 	private final String ADMIN_PASSWORD = "123abc";
-	
+
 	public static User user;
 
 	public LoginPanel() {
@@ -38,7 +38,7 @@ public class LoginPanel extends JPanel {
 		JTextField passwordField = new JTextField(18);
 		loginDetails.add(passwordLabel);
 		loginDetails.add(passwordField);
-		
+
 		Database db = Database.getInstance();
 
 		JButton loginButton = new JButton("Login");
@@ -46,14 +46,20 @@ public class LoginPanel extends JPanel {
 			email = emailField.getText();
 			password = passwordField.getText();
 
+			// if admin then route to admin dashboard
 			if (email.equals(ADMIN_EMAIL) && (password.equals(ADMIN_PASSWORD))) {
 				MainFrame.cardLayout.show(MainFrame.main, "adminDashboard");
-			}
-			
-			// if user then validate
+			} else
+			// if officer then validate and route to officer dashboard
+			if (db.validateOfficer(email, password)) {
+				MainFrame.cardLayout.show(MainFrame.main, "officerDashboard");
+			} else
+			// if user then validate and route to user dashboard
 			if (db.validateUser(email, password)) {
 				user = db.getUser(email);
 				MainFrame.cardLayout.show(MainFrame.main, "userDashboard");
+			} else {
+				// Login Error
 			}
 		});
 		loginDetails.add(loginButton);
